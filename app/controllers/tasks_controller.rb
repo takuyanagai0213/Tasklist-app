@@ -18,6 +18,7 @@ class TasksController < ApplicationController
       
       if @task.save
         flash[:sucess] = 'Task が正常に保存されました'
+        redirect_to @task
       else
         flash.now[:danger] = 'Task が保存されませんでした'
         render :new
@@ -33,6 +34,7 @@ class TasksController < ApplicationController
       
       if @task.update(task_params)
         flash[:sucess] = 'Task は正常に更新されました'
+        redirect_to @task
       else
         flash.now[:danger] = 'Task は更新されませんでした'
         render :edit
@@ -47,10 +49,10 @@ class TasksController < ApplicationController
       redirect_to tasks_url
     end
     
-    private
-    
-    def task_params
-      params.require(:task).permit(:content, :status)
-    end
+  private
+  
+  def task_params
+    params.require(:task).permit(:content, :status)
+  end
     
 end
