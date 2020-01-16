@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
-    #共通化をまだ行っていない
+    before_action :require_user_logged_in
+    before_action :correct_user, only: [:show, :edit, :destroy]
     
     def index
-      @tasks = Task.all
+      @tasks = current_user.tasks.order(id: :desc)
     end
     
     def show
@@ -14,14 +15,14 @@ class TasksController < ApplicationController
     end
     
     def create
-      @task = Task.new(task_params)
+      @task = current_user.tasks.build(task_params)
       
       if @task.save
         flash[:sucess] = 'Task が正常に保存されました'
-        redirect_to @task
+        redirect_to root_url
       else
         flash.now[:danger] = 'Task が保存されませんでした'
-        render :new
+        render 'toppages/index'
       end
     end
     
@@ -54,5 +55,11 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:content, :status)
   end
-    
+  
+  def correct_user
+    @task = current_user.tasks.find_by(id: params[:id])
+    unless @task
+      redirect_to root_url
+    end
+  end
 end

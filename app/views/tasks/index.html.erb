@@ -1,9 +1,12 @@
-<h1>タスク一覧</h1>
+<% if logged_in? %>
+    <div class="row">
+      <div class="col-sm-8">
+        <h1>タスク一覧</h1>
+        <%= render 'tasks/tasks', tasks: @tasks %>
+      </div>
+    </div>
+    <%= link_to '新規タスクの保存', new_task_path %>
+<% else %>
+  <%= redirect_to login_url %>
+<% end %>
 
-<ul>
-    <% @tasks.each do |task| %>
-      <li><%= link_to task.id, task %> : <%= task.content %> &gt; <%= task.status %></li>
-    <% end %>
-</ul>
-
-<%= link_to '新規タスクの保存', new_task_path %>
