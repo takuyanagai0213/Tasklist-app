@@ -21,6 +21,7 @@ class TasksController < ApplicationController
         flash[:sucess] = 'Task が正常に保存されました'
         redirect_to root_url
       else
+        @tasks = current_user.tasks.order(id: :desc)
         flash.now[:danger] = 'Task が保存されませんでした'
         render 'toppages/index'
       end

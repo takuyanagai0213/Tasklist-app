@@ -5,7 +5,6 @@
         <%= render 'tasks/tasks', tasks: @tasks %>
       </div>
     </div>
-    <%= link_to '新規タスクの保存', new_task_path %>
 <% else %>
   <%= redirect_to login_url %>
 <% end %>
