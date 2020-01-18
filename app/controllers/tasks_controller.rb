@@ -23,7 +23,7 @@ class TasksController < ApplicationController
       else
         @tasks = current_user.tasks.order(id: :desc)
         flash.now[:danger] = 'Task が保存されませんでした'
-        render 'toppages/index'
+        render :new
       end
     end
     
